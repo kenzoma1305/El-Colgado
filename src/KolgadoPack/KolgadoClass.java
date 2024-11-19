@@ -30,21 +30,24 @@ public class KolgadoClass {
 			//Nos muestra el progreso de la partida
 			System.out.println("Palabra: ");
 			for (char c : palabraGuiones) {
-				System.out.println(c + "");
+				System.out.println(c + ""); //Se nos muestra los guiones y las letras acertadas
 			}
 			System.out.println("\nIntentos restantes: " + intentos);
 			
+			//Le pide al usuario que introduzca una letra
 			System.out.println("Escribe una letra: ");
 			char letra = usuario.nextLine().toLowerCase().charAt(0);
 			
+			//Comprobar si la letra esta en la palabra por adivinar
 			int aciertos = 0;
 			for (int i = 0; i < palabraOculta.length(); i++) {
 				if (palabraOculta.charAt(i) == letra && palabraGuiones[i] == '_') {
-					palabraGuiones[i] = letra;
+					palabraGuiones[i] = letra; //Reemplazará el guión con la letra de la posición
 					aciertos++;
 					letrasAdivinadas++;
 				}
 			}
+			
 		}
 		
 		

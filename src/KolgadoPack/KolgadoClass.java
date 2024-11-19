@@ -48,6 +48,15 @@ public class KolgadoClass {
 				}
 			}
 			
+			//Si no hubieron aciertos
+			if (aciertos == 0) {
+				intentos--;
+			}
+			
+			//Si se ha completado la palabra
+			if(letrasAdivinadas == LetrasPalabraOculta) {
+				break;
+			}
 		}
 		
 		

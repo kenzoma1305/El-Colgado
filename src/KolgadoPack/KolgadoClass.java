@@ -59,7 +59,15 @@ public class KolgadoClass {
 			}
 		}
 		
+		//Final del juego
+		if (letrasAdivinadas == LetrasPalabraOculta) {
+			System.out.println("\n¡Muy bien! Conseguiste salvar a Pepito con la palabra: " + palabraOculta);
+		} else {
+			System.out.println("\nVaya... Te quedaste sin intentos. Para salvarlo, era con: " + palabraOculta);
+		}
 		
+		//Cerramos al terminar
+		usuario.close();
 	}
 
 }

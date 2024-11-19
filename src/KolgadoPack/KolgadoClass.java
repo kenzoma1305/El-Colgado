@@ -30,7 +30,7 @@ public class KolgadoClass {
 			//Nos muestra el progreso de la partida
 			System.out.println("Palabra: ");
 			for (char c : palabraGuiones) {
-				System.out.println(c + ""); //Se nos muestra los guiones y las letras acertadas
+				System.out.print(c + ""); //Se nos muestra los guiones y las letras acertadas
 			}
 			System.out.println("\nIntentos restantes: " + intentos);
 			

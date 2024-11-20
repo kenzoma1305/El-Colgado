@@ -4,7 +4,15 @@ public class KolgadoClass {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
+		/*Este es el juego del colgado y tendremos que salvar a Cecilio de la soga...
+		 * Las reglas del jugo son:
+		 * 			- Cada jugador tiene que adivinar una letra de la palabra secreta en cada ronda.
+		 * 			- El número máximo de intentos por jugador es 6.
+		 * 			- Si un jugador adivina correctamente una letra, esta se revela en su posición en la palabra secreta.
+		 * 			- Si un jugador se queda sin intentos, pierde la ronda.
+		 * 			- El jugador que adivine toda la palabra primero o quien gane más rondas será el ganador.*/
 		
+		//Abrimos scanner para que el usuario pueda entrar los datos que se pidan más adelante
 		Scanner usuario = new Scanner(System.in);
 		
 		//El usuario eligirá la palabra secreta al inicio de la partida
@@ -33,7 +41,7 @@ public class KolgadoClass {
 		}
 		
 		//Comenzamos el juego con las palabras ocultas con un guión bajo
-		System.out.print("¡COMENCEMOS!");
+		System.out.println("¡COMENCEMOS!");
 		char [] palabraGuiones = new char[LetrasPalabraOculta];
 		for (int i = 0; i < palabraGuiones.length; i++) {
 			palabraGuiones[i] = '_';
@@ -46,7 +54,7 @@ public class KolgadoClass {
 		int contadorTurno = 0;
 		
 		//Imprimimos dos mensajes para introducir el juego
-		System.out.println("¡Debemos salvar a nuestro amigo Cecilio!");
+		System.out.print("¡Debemos salvar a nuestro amigo Cecilio!");
 		System.out.println("¿Podreis adivinar la palabra oculta?");
 		
 		//Creamos un bucle mientras queden intentos y no se haya adivinado toda la palabra.

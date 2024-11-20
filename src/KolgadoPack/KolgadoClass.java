@@ -15,11 +15,6 @@ public class KolgadoClass {
 		//Abrimos scanner para que el usuario pueda entrar los datos que se pidan más adelante
 		Scanner usuario = new Scanner(System.in);
 		
-		//El usuario eligirá la palabra secreta al inicio de la partida
-		System.out.println("¡Oye! Dime qué palabra quieres ocultar: ");
-		String palabraOculta = usuario.nextLine().toLowerCase();
-		int LetrasPalabraOculta = palabraOculta.length();
-		
 		//El juego preguntará por el número de jugadores, siendo mínimo 2 y máximo 4
 		System.out.println("¡Bienvenido al juego del colgado héroe!");
 		System.out.print("¿Cuántos quereis salvar a Cecilio? (Mín: 2; Máx: 4): ");
@@ -40,18 +35,44 @@ public class KolgadoClass {
 			 											y en adelante*/
 		}
 		
-		//Comenzamos el juego con las palabras ocultas con un guión bajo
-		System.out.println("¡COMENCEMOS!");
-		char [] palabraGuiones = new char[LetrasPalabraOculta];
-		for (int i = 0; i < palabraGuiones.length; i++) {
-			palabraGuiones[i] = '_';
+		//Se nos preguntará por el número de rondas
+		System.out.println("Dime cúantas rondas quieres jugar: ");
+		int numRondas = usuario.nextInt();
+		usuario.nextLine();
+		
+		//Para jugar por rondas creamos bucle
+		for (int ronda = 1; ronda <= numRondas; ronda++ ) {
+			System.out.println("\n···RONDA " + ronda + "···");
+			
+			//El usuario eligirá la palabra secreta al inicio de la partida
+			System.out.println("¡Oye! Dime qué palabra quieres ocultar: ");
+			String palabraOculta = usuario.nextLine().toLowerCase();
+			int LetrasPalabraOculta = palabraOculta.length();
+			
+			//Comenzamos el juego con las palabras ocultas con un guión bajo
+			System.out.println("¡COMENCEMOS!");
+			char [] palabraGuiones = new char[LetrasPalabraOculta];
+			for (int i = 0; i < palabraGuiones.length; i++) {
+				palabraGuiones[i] = '_';
+			}
+			
+			//Creamos variables para contar el progreso de la partida
+			int letrasOk = 0;
+			int[] intentosJugador = new int[numJugadores];
+			for (int i = 0; i < numJugadores; i++) {
+				intentosJugador[i] = 6;
+			}
+			
+			int contadorTurno = 0;
 		}
+		
+		
 		
 		/*Creamos variables para almacenar los intentos, las letras adivinadas (como contador)
 		 y el tuno actual de la partida*/
 		int intentos = 6;
 		int letrasAdivinadas = 0;
-		int contadorTurno = 0;
+		
 		
 		//Imprimimos dos mensajes para introducir el juego
 		System.out.print("¡Debemos salvar a nuestro amigo Cecilio!");

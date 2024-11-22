@@ -30,6 +30,7 @@ public class KolgadoClass {
 		
 		//Creción de nicknames para cada jugador
 		String[] jugadores = new String[numJugadores];
+		int[] points = new int[numJugadores];
 		for (int i = 0; i < numJugadores; i++) {
 			jugadores[i] = "Jugador nº " + (i + 1); /*Esto hace que el nombre del jugador sea: Jugador 1
 			 											y en adelante*/
@@ -57,71 +58,86 @@ public class KolgadoClass {
 			}
 			
 			//Creamos variables para contar el progreso de la partida
-			int letrasOk = 0;
+			int letrasAdivinadas = 0;
 			int[] intentosJugador = new int[numJugadores];
 			for (int i = 0; i < numJugadores; i++) {
-				intentosJugador[i] = 6;
+				intentosJugador[i] = 6;  //Cada uno de los jugadores tiene 6 intentos
 			}
 			
 			int contadorTurno = 0;
-		}
-		
-		
-		
-		/*Creamos variables para almacenar los intentos, las letras adivinadas (como contador)
-		 y el tuno actual de la partida*/
-		int intentos = 6;
-		int letrasAdivinadas = 0;
-		
-		
-		//Imprimimos dos mensajes para introducir el juego
-		System.out.print("¡Debemos salvar a nuestro amigo Cecilio!");
-		System.out.println("¿Podreis adivinar la palabra oculta?");
-		
-		//Creamos un bucle mientras queden intentos y no se haya adivinado toda la palabra.
-		while (intentos > 0 && letrasAdivinadas < LetrasPalabraOculta) {
-			//Nos muestra el progreso de la partida
-			System.out.println("Palabra: ");
-			for (char c : palabraGuiones) {
-				System.out.print(c + " "); //Se nos muestra los guiones y las letras acertadas
-			}
-			System.out.println("\nIntentos restantes: " + intentos);
+			int winnerRonda = -1; //He puesto este valor ya que al principio, no existe ningún ganador
 			
-			//Le pide al usuario que introduzca una letra
-			System.out.println("\nEs el turno de " + jugadores[contadorTurno]);
-			System.out.println("Escribe una letra: ");
-			char letra = usuario.nextLine().toLowerCase().charAt(0);
-			
-			//Comprobar si la letra esta en la palabra por adivinar
-			int aciertos = 0;
-			for (int i = 0; i < palabraOculta.length(); i++) {
-				if (palabraOculta.charAt(i) == letra && palabraGuiones[i] == '_') {
-					palabraGuiones[i] = letra; //Reemplazará el guión con la letra de la posición
-					aciertos++;
-					letrasAdivinadas++;
+			//Creamos el bucle principal de la ronda
+			while (letrasAdivinadas < LetrasPalabraOculta) {
+				//Comprobamos si el jugador que está jugando la ronda 
+				if (intentosJugador[contadorTurno] <= 0) {
+					System.out.println("¡" + jugadores[contadorTurno] + " se quedó seco y pierde la ronda!" );
+					contadorTurno = (contadorTurno + 1) % numJugadores;
+					continue; //Esto hace que cuando esto suceda, se cambie al siguiente jugador
 				}
+				
+				//El progreso de la palabra oculta
+				System.out.println("Palabra: ");
+				for (char c : palabraGuiones) {
+					System.out.print(c + " "); //Se nos muestra los guiones y las letras acertadas
+				}
+				System.out.println("\nIntentos restantes del " + jugadores[contadorTurno] + ": " + intentosJugador[contadorTurno]);
+				
+				//Le pide al usuario que introduzca una letra
+				System.out.println("\nEs el turno de " + jugadores[contadorTurno]);
+				System.out.println("Escribe una letra: ");
+				char letra = usuario.nextLine().toLowerCase().charAt(0);
+				
+				//Comprobar si la letra esta en la palabra por adivinar
+				int aciertos = 0;
+				for (int i = 0; i < palabraOculta.length(); i++) {
+					if (palabraOculta.charAt(i) == letra && palabraGuiones[i] == '_') {
+						palabraGuiones[i] = letra; //Reemplazará el guión con la letra de la posición
+						aciertos++;
+						letrasAdivinadas++;
+					}
+				}
+				
+				//Si no hubieron aciertos, el jugador pierde un intento
+				if (aciertos == 0) {
+					intentosJugador[contadorTurno]--;
+				}
+				
+				//Cuando haya un error, se cambia automáticamente al siguiente jugador
+				contadorTurno = (contadorTurno + 1) % numJugadores;
+				
+				//Si se ha completado la palabra
+				if(letrasAdivinadas == LetrasPalabraOculta) {
+					winnerRonda = contadorTurno;
+					break;
+				}	
 			}
 			
-			//Si no hubieron aciertos
-			if (aciertos == 0) {
-				intentos--;
+			//Finalización de la ronda
+			if (winnerRonda != -1) {
+				System.out.println("\n¡El " + jugadores[winnerRonda] + " adivinó la palabra y es el ganador de la ronda!");
+				points[winnerRonda]++;
+			} else {
+				System.out.println("\n¡Vaya! Nadie consiguió descifrar la palabra... Era: " + palabraOculta);
 			}
 			
-			//Cuando haya un error, se cambia automáticamente al siguiente jugador
-			contadorTurno = (contadorTurno + 1) % numJugadores;
-			
-			//Si se ha completado la palabra
-			if(letrasAdivinadas == LetrasPalabraOculta) {
-				break;
-			}
 		}
 		
 		//Final del juego
-		if (letrasAdivinadas == LetrasPalabraOculta) {
-			System.out.println("\n¡Muy bien! Conseguisteis salvar a Pepito con la palabra: " + palabraOculta);
-		} else {
-			System.out.println("\nVaya... Os quedaste sin intentos. Para salvarlo, era con: " + palabraOculta + "...");
+		System.out.println("\n>>>·FINAL RESULTS·<<<");
+		int maxPoints = 0;
+		String finalWinner = "";
+		
+		for (int i = 0; i < numJugadores; i++) {
+			System.out.println(jugadores[i] + ": " + points[i] + " rondas ganadas.");
+			if (points[i] > maxPoints) {
+				maxPoints = points[i];
+				finalWinner = jugadores[i];
+			}
 		}
+		
+		//Creamos un mensaje final
+		System.out.println("\n¡El que rescató a Cecilio fue " + finalWinner + " con " + maxPoints + " rondas ganadas!");
 		
 		//Cerramos al terminar
 		System.out.println("¡Hasta la próxima héroes!");

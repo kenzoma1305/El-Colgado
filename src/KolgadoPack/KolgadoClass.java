@@ -3,7 +3,7 @@ import java.util.Scanner;
 public class KolgadoClass {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+	
 		/*Este es el juego del colgado y tendremos que salvar a Cecilio de la soga...
 		 * Las reglas del jugo son:
 		 * 			- Cada jugador tiene que adivinar una letra de la palabra secreta en cada ronda.
@@ -20,7 +20,7 @@ public class KolgadoClass {
 		System.out.print("¿Cuántos quereis salvar a Cecilio? (Mín: 2; Máx: 4): ");
 		int numJugadores = usuario.nextInt();
 		
-		//Validamos el número de jugadores con las condiciones que pusimos con un pequeño bucle
+		//Validamos el número de jugadores con las condiciones que pusimos con un pequeño bucle, si no lo está, nos lo vuelve a preguntar
 		while (numJugadores < 2 || numJugadores > 4) {
 			System.out.println("Oops... ¡El número de jugadores es inválido!");
 			System.out.print("Recuerda que teneis que ser entre 2 y 4: ");
@@ -28,18 +28,20 @@ public class KolgadoClass {
 		}
 		usuario.nextLine();
 		
-		//Creción de nicknames para cada jugador
+		/*Creción de nicknames para cada jugador con dos arrays, 
+		 *para almacenar los nombres automáticos y para llevar la cuenta de las 
+		 *rondas ganadas por cada jugador.
+		 */
 		String[] jugadores = new String[numJugadores];
 		int[] points = new int[numJugadores];
 		for (int i = 0; i < numJugadores; i++) {
-			jugadores[i] = "Jugador nº " + (i + 1); /*Esto hace que el nombre del jugador sea: Jugador 1
-			 											y en adelante*/
+			jugadores[i] = "Jugador nº " + (i + 1); //Esto hace que el nombre del jugador sea: Jugador 1 y en adelante
 		}
 		
 		//Se nos preguntará por el número de rondas
 		System.out.println("Dime cúantas rondas quieres jugar: ");
 		int numRondas = usuario.nextInt();
-		usuario.nextLine();
+		usuario.nextLine(); 
 		
 		//Para jugar por rondas creamos bucle
 		for (int ronda = 1; ronda <= numRondas; ronda++ ) {
@@ -47,24 +49,24 @@ public class KolgadoClass {
 			
 			//El usuario eligirá la palabra secreta al inicio de la partida
 			System.out.println("¡Oye! Dime qué palabra quieres ocultar: ");
-			String palabraOculta = usuario.nextLine().toLowerCase();
+			String palabraOculta = usuario.nextLine().toLowerCase(); //En minúsculas para evitar errores de comparación de caracteres
 			int LetrasPalabraOculta = palabraOculta.length();
 			
 			//Comenzamos el juego con las palabras ocultas con un guión bajo
 			System.out.println("¡COMENCEMOS!");
-			char [] palabraGuiones = new char[LetrasPalabraOculta];
+			char [] palabraGuiones = new char[LetrasPalabraOculta]; //Array que contiene guiones bajos en vez de letras
 			for (int i = 0; i < palabraGuiones.length; i++) {
 				palabraGuiones[i] = '_';
 			}
 			
 			//Creamos variables para contar el progreso de la partida
-			int letrasAdivinadas = 0;
+			int letrasAdivinadas = 0; //Contador de letras acertadas 
 			int[] intentosJugador = new int[numJugadores];
 			for (int i = 0; i < numJugadores; i++) {
 				intentosJugador[i] = 6;  //Cada uno de los jugadores tiene 6 intentos
 			}
 			
-			int contadorTurno = 0;
+			int contadorTurno = 0; //Contador de turnos 
 			int winnerRonda = -1; //He puesto este valor ya que al principio, no existe ningún ganador
 			
 			//Creamos el bucle principal de la ronda
